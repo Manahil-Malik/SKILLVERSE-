@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillVerse — Know Your Gaps. Close Them Fast.</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">⚡</div>
+            <span>Skill<span class="logo-accent">Verse</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#how" onclick="smoothScroll('how'); return false;">How it Works</a>
+            <a href="#features" onclick="smoothScroll('features'); return false;">Features</a>
+            <a href="#pricing" onclick="smoothScroll('pricing'); return false;">Pricing</a>
+            <a href="#blog" onclick="smoothScroll('blog'); return false;">Blog</a>
+        </div>
+        <div class="nav-right">
+            <div id="authNavSlot"></div>
+            <a href="analyser.html" class="btn-nav">Try it Free</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                Built for Pakistan's Job Market
+            </div>
+            <h1>Your CV, <span class="accent">analyzed</span><br>in seconds.</h1>
+            <p>Pakistani students apply blindly and hear nothing back. SkillVerse shows your exact skill gaps <strong>and gives you a step-by-step learning path</strong> to close them — in 30 seconds.</p>
+            <div class="hero-value">
+                <span class="hero-value-icon">🎓</span>
+                <p><strong>Not just scores — a roadmap.</strong> We map every missing skill to curated courses on PIAIC, Saylani, Coursera, and more so you always know exactly what to learn next.</p>
+            </div>
+            <div class="hero-btns">
+                <a href="analyser.html" class="btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Analyse My CV →
+                </a>
+                <a href="#how" class="btn-secondary" onclick="smoothScroll('how'); return false;">See How it Works</a>
+            </div>
+        </div>
+
+        <!-- MOCK CV RESULT CARD -->
+        <div class="hero-card">
+            <div class="card-header-badge">
+                <span>📖</span> Learning paths included
+            </div>
+            <div class="card-file">
+                <div class="card-file-icon">📄</div>
+                <div class="card-file-info">
+                    <div class="card-file-name">CV_Analysis_Result.pdf</div>
+                    <div class="card-file-sub">Matched against: Frontend Dev — Rozee.pk</div>
+                </div>
+                <div class="card-done">Done</div>
+            </div>
+            <div class="card-score-row">
+                <div class="card-score-ring">
+                    <svg width="70" height="70" viewBox="0 0 70 70">
+                        <circle cx="35" cy="35" r="28" fill="none" stroke="#1e293b" stroke-width="6"/>
+                        <circle cx="35" cy="35" r="28" fill="none" stroke="#00e5a0" stroke-width="6"
+                            stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="46"
+                            transform="rotate(-90 35 35)"/>
+                    </svg>
+                    <div class="card-score-num">68%<br><span>match</span></div>
+                </div>
+                <div class="card-score-info">
+                    <div class="card-score-label">Match Score</div>
+                    <div class="card-score-verdict">Good start — 4 skills missing</div>
+                    <div class="card-score-sub">Close the gaps below to reach 90%+</div>
+                </div>
+            </div>
+            <div class="card-gaps-label">SKILL GAPS DETECTED</div>
+            <div class="card-gaps">
+                <div class="card-gap-row">
+                    <span class="gap-dot red"></span>
+                    <span class="gap-skill">TypeScript</span>
+                    <span class="gap-level">Intermediate needed</span>
+                </div>
+                <div class="card-gap-row">
+                    <span class="gap-dot red"></span>
+                    <span class="gap-skill">REST APIs</span>
+                    <span class="gap-level">Beginner needed</span>
+                </div>
+                <div class="card-gap-row">
+                    <span class="gap-dot yellow"></span>
+                    <span class="gap-skill">Git & GitHub</span>
+                    <span class="gap-level">Beginner needed</span>
+                </div>
+                <div class="card-gap-row">
+                    <span class="gap-dot yellow"></span>
+                    <span class="gap-skill">Tailwind CSS</span>
+                    <span class="gap-level">Beginner needed</span>
+                </div>
+            </div>
+            <div class="card-path">
+                <div class="card-path-label">
+                    <span>🎓</span> YOUR LEARNING PATH
+                </div>
+                <div class="card-path-item">
+                    <span class="path-dot green"></span>
+                    <span class="path-name">TypeScript Basics</span>
+                    <span class="path-via">via PIAIC</span>
+                </div>
+                <div class="card-path-item">
+                    <span class="path-dot teal"></span>
+                    <span class="path-name">REST API Design</span>
+                    <span class="path-via">via Coursera</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how" id="how">
+        <div class="section-label">HOW IT WORKS</div>
+        <h2>Three steps to your dream job</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <div class="step-num-badge">01</div>
+                <h3>Upload Your CV</h3>
+                <p>PDF or Word document. Our AI reads it instantly — no formatting tricks needed.</p>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step">
+                <div class="step-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                </div>
+                <div class="step-num-badge">02</div>
+                <h3>Paste the Job Description</h3>
+                <p>Copy it from Rozee.pk, LinkedIn, or anywhere. We match your CV against the exact role.</p>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step">
+                <div class="step-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <div class="step-num-badge">03</div>
+                <h3>Get Your Learning Roadmap</h3>
+                <p>Match score, skill gaps, and a personalised learning roadmap from PIAIC, Saylani, Coursera — in seconds.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+        <div class="section-label">FEATURES</div>
+        <h2>Everything you need to get hired</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <h3>Match Score</h3>
+                <p>See exactly how well your CV matches the job — 0 to 100%. Know where you stand before you apply.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                </div>
+                <h3>Skill Gap Analysis</h3>
+                <p>Know which skills are hurting you most in the Pakistan job market — ranked by urgency.</p>
+            </div>
+            <div class="feature-card featured">
+                <div class="feature-usp-badge">OUR USP</div>
+                <div class="feature-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <h3>Learning Paths</h3>
+                <p>Get curated course recommendations from PIAIC, Saylani, Coursera, and more — one per missing skill.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <h3>Built for Pakistan</h3>
+                <p>Trained on 10,500+ Pakistani job postings from Rozee.pk and LinkedIn. Not generic western advice.</p>
+            </div>
+        </div>
+
+        <!-- LEARNING PATH DEEP DIVE -->
+        <div class="deepdive" id="pricing">
+            <div class="deepdive-left">
+                <div class="deepdive-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/></svg>
+                    LEARNING PATH DEEP DIVE
+                </div>
+                <h2>We don't just find gaps.<br>We close them.</h2>
+                <p>Every skill gap comes with a curated course recommendation — hand-picked from platforms Pakistani students actually have access to. No guesswork. Just a clear next step.</p>
+                <ul class="deepdive-list">
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        PIAIC — AI & cloud tracks
+                    </li>
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Saylani Mass IT Training
+                    </li>
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Coursera audit courses
+                    </li>
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        YouTube curated playlists
+                    </li>
+                </ul>
+            </div>
+            <div class="deepdive-right">
+                <div class="deepdive-course">
+                    <div class="deepdive-num green">1</div>
+                    <div class="deepdive-course-info">
+                        <div class="deepdive-missing">Missing: TypeScript</div>
+                        <div class="deepdive-course-name">TypeScript for Beginners</div>
+                    </div>
+                    <div class="deepdive-platform green">PIAIC<br><span>4 weeks</span></div>
+                </div>
+                <div class="deepdive-course">
+                    <div class="deepdive-num teal">2</div>
+                    <div class="deepdive-course-info">
+                        <div class="deepdive-missing">Missing: REST APIs</div>
+                        <div class="deepdive-course-name">API Design & Integration</div>
+                    </div>
+                    <div class="deepdive-platform teal">Coursera<br><span>3 weeks</span></div>
+                </div>
+                <div class="deepdive-course">
+                    <div class="deepdive-num green">3</div>
+                    <div class="deepdive-course-info">
+                        <div class="deepdive-missing">Missing: Git & GitHub</div>
+                        <div class="deepdive-course-name">Git Crash Course</div>
+                    </div>
+                    <div class="deepdive-platform green">Saylani<br><span>1 week</span></div>
+                </div>
+                <div class="deepdive-course">
+                    <div class="deepdive-num yellow">4</div>
+                    <div class="deepdive-course-info">
+                        <div class="deepdive-missing">Missing: Docker</div>
+                        <div class="deepdive-course-name">Docker for Developers</div>
+                    </div>
+                    <div class="deepdive-platform yellow">YouTube<br><span>2 weeks</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="blog">
+        <div class="section-label">RESULTS</div>
+        <h2>Pakistani students getting hired</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"SkillVerse told me I was missing Docker and REST API skills. I did the PIAIC course they linked, updated my CV, and got 3 interviews in a week."</p>
+                <div class="testimonial-user">
+                    <div class="testimonial-avatar" style="background:#00e5a0;">AR</div>
+                    <div>
+                        <div class="testimonial-name">Ahmed Raza</div>
+                        <div class="testimonial-role">Software Engineer → Systems Ltd</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"The learning path was the game changer. Not just 'you're missing X' but 'here's exactly where to learn it.' That's what makes this different."</p>
+                <div class="testimonial-user">
+                    <div class="testimonial-avatar" style="background:#7c5cfc;">FM</div>
+                    <div>
+                        <div class="testimonial-name">Fatima Malik</div>
+                        <div class="testimonial-role">Frontend Dev → Arbisoft</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"I applied to 40 jobs and heard nothing. SkillVerse showed my CV was only a 52% match. After following the learning path it gave me, I'm at 87%."</p>
+                <div class="testimonial-user">
+                    <div class="testimonial-avatar" style="background:#4f46e5;">BH</div>
+                    <div>
+                        <div class="testimonial-name">Bilal Hassan</div>
+                        <div class="testimonial-role">Data Analyst → Telenor PK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <h2>Ready to find out where you stand?</h2>
+        <p>Free to use. No signup required. Results in 30 seconds.</p>
+        <a href="analyser.html" class="btn-cta">Analyse My CV Now →</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="logo">
+            <div class="logo-icon">⚡</div>
+            <span>Skill<span class="logo-accent">Verse</span></span>
+        </div>
+        <p>Built for Pakistan's next generation of talent.</p>
+    </footer>
+
+    <script>
+    function smoothScroll(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    </script>
+    <script src="auth.js"></script>
+</body>
+</html>
