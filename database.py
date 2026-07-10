@@ -1,8 +1,7 @@
 import os
 import mysql.connector
 
-# Reads DB credentials from environment variables (set these in your .env file).
-# Defaults assume a local MySQL install with the default root user.
+
 DB_CONFIG = {
     "host": os.environ.get("DB_HOST", "localhost"),
     "user": os.environ.get("DB_USER", "root"),
@@ -17,11 +16,7 @@ def get_connection():
 
 
 def init_db():
-    """Creates the 'skillverse' database (if it doesn't exist yet) and the
-    users table inside it. Safe to call every time the app starts."""
-
-    # Step 1: connect WITHOUT specifying a database, since it might not
-    # exist yet, and create it if needed.
+    
     conn = mysql.connector.connect(
         host=DB_CONFIG["host"],
         user=DB_CONFIG["user"],
@@ -33,7 +28,7 @@ def init_db():
     cursor.close()
     conn.close()
 
-    # Step 2: connect to the actual database and create the users table.
+  
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -57,6 +52,6 @@ def init_db():
         )
     """)
     conn.commit()
-    
+
     cursor.close()
     conn.close()
