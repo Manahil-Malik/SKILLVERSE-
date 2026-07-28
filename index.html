@@ -191,7 +191,7 @@
         </div>
 
         <!-- LEARNING PATH DEEP DIVE -->
-        <div class="deepdive" id="pricing">
+        <div class="deepdive" id="learning-path-demo">
             <div class="deepdive-left">
                 <div class="deepdive-badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/></svg>
@@ -254,6 +254,172 @@
             </div>
         </div>
     </section>
+
+    <!-- PRICING -->
+    <section class="pr-section" id="pricing">
+        <style>
+            .pr-section {
+                padding: 5rem 8% 6rem;
+                text-align: center;
+            }
+            .pr-eyebrow {
+                display: inline-flex; align-items: center; gap: 0.5rem;
+                background: #111c2e; border: 1px solid #1e2d47;
+                padding: 0.4rem 0.9rem; border-radius: 20px;
+                font-size: 0.78rem; font-weight: 600; color: #00e5a0;
+                margin-bottom: 1.2rem;
+            }
+            .pr-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: #00e5a0; }
+            .pr-section h2 {
+                font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em;
+                color: #e8eaf0; margin-bottom: 0.7rem;
+            }
+            .pr-section > p {
+                color: #8892a4; font-size: 1rem; max-width: 500px;
+                margin: 0 auto 2.2rem; line-height: 1.6;
+            }
+
+            /* Toggle */
+            .pr-toggle-wrap {
+                display: inline-flex; align-items: center; gap: 0.9rem;
+                margin-bottom: 2.5rem;
+            }
+            .pr-toggle-label {
+                font-size: 0.9rem; font-weight: 600; color: #8892a4;
+                cursor: pointer; transition: color 0.2s;
+            }
+            .pr-toggle-label.active { color: #e8eaf0; }
+            .pr-switch {
+                position: relative; width: 52px; height: 28px;
+                background: #162035; border: 1px solid #1e2d47;
+                border-radius: 20px; cursor: pointer;
+            }
+            .pr-switch-knob {
+                position: absolute; top: 3px; left: 3px;
+                width: 20px; height: 20px; border-radius: 50%;
+                background: #00e5a0; transition: transform 0.2s;
+            }
+            .pr-switch.on .pr-switch-knob { transform: translateX(24px); }
+            .pr-save-badge {
+                background: rgba(0,229,160,0.12); color: #00e5a0;
+                font-size: 0.72rem; font-weight: 700;
+                padding: 0.25rem 0.6rem; border-radius: 12px;
+            }
+
+            /* Cards */
+            .pr-cards {
+                max-width: 820px; margin: 0 auto;
+                display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+                text-align: left;
+            }
+            @media (max-width: 720px) { .pr-cards { grid-template-columns: 1fr; } }
+
+            .pr-card {
+                background: #111c2e; border: 1px solid #1e2d47;
+                border-radius: 18px; padding: 2.1rem; position: relative;
+            }
+            .pr-card.pro {
+                border-color: #7c5cfc;
+                background: linear-gradient(180deg, rgba(124,92,252,0.08), #111c2e 40%);
+            }
+            .pr-badge {
+                position: absolute; top: -13px; left: 2.1rem;
+                background: linear-gradient(135deg, #7c5cfc, #9d7bff);
+                color: white; font-size: 0.72rem; font-weight: 700;
+                padding: 0.3rem 0.8rem; border-radius: 20px; letter-spacing: 0.03em;
+            }
+            .pr-plan-name {
+                font-size: 0.9rem; font-weight: 700; color: #8892a4;
+                text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8rem;
+            }
+            .pr-card.pro .pr-plan-name { color: #7c5cfc; }
+            .pr-price-row { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.3rem; }
+            .pr-amount { font-size: 2.4rem; font-weight: 800; color: #e8eaf0; letter-spacing: -0.02em; }
+            .pr-period { color: #8892a4; font-size: 0.88rem; }
+            .pr-annual-note { font-size: 0.78rem; color: #00e5a0; font-weight: 600; margin-bottom: 1.6rem; min-height: 1.1rem; }
+            .pr-features { list-style: none; margin-bottom: 1.8rem; }
+            .pr-features li {
+                display: flex; align-items: flex-start; gap: 0.6rem;
+                font-size: 0.87rem; padding: 0.55rem 0; border-bottom: 1px solid #1e2d47;
+                color: #e8eaf0;
+            }
+            .pr-features li:last-child { border-bottom: none; }
+            .pr-features li.off { color: #8892a4; }
+            .pr-btn {
+                width: 100%; padding: 0.85rem; border-radius: 10px;
+                font-weight: 700; font-size: 0.9rem; cursor: pointer;
+                border: none; text-align: center; text-decoration: none; display: block;
+                transition: transform 0.2s;
+            }
+            .pr-btn:hover { transform: translateY(-1px); }
+            .pr-btn.free { background: #0a0f1e; color: #e8eaf0; border: 1px solid #1e2d47; }
+            .pr-btn.pro { background: linear-gradient(135deg, #7c5cfc, #9d7bff); color: white; }
+        </style>
+
+        <div class="pr-eyebrow">
+            <span class="pr-eyebrow-dot"></span>
+            Simple, student-friendly pricing
+        </div>
+        <h2>Find your gaps for free.<br>Close them with Pro.</h2>
+        <p>Every CV analysis is free — always. Upgrade for the full, step-by-step learning pathway.</p>
+
+        <div class="pr-toggle-wrap">
+            <span class="pr-toggle-label active" id="prMonthlyLabel">Monthly</span>
+            <div class="pr-switch" id="prSwitch" onclick="prToggleBilling()">
+                <div class="pr-switch-knob"></div>
+            </div>
+            <span class="pr-toggle-label" id="prAnnualLabel">Annual</span>
+            <span class="pr-save-badge">Save 17%</span>
+        </div>
+
+        <div class="pr-cards">
+            <div class="pr-card">
+                <div class="pr-plan-name">Free</div>
+                <div class="pr-price-row">
+                    <span class="pr-amount">PKR 0</span>
+                    <span class="pr-period">/ forever</span>
+                </div>
+                <div class="pr-annual-note">&nbsp;</div>
+                <ul class="pr-features">
+                    <li>✅ Unlimited CV × JD analysis</li>
+                    <li>✅ Full skill gap breakdown</li>
+                    <li>✅ CV improvement tips</li>
+                    <li class="off">🔒 Step-by-step learning pathway</li>
+                </ul>
+                <a href="analyser.html" class="pr-btn free">Get Started Free</a>
+            </div>
+
+            <div class="pr-card pro">
+                <div class="pr-badge">MOST POPULAR</div>
+                <div class="pr-plan-name">Pro</div>
+                <div class="pr-price-row">
+                    <span class="pr-amount" id="prAmount">PKR 399</span>
+                    <span class="pr-period" id="prPeriod">/ month</span>
+                </div>
+                <div class="pr-annual-note" id="prAnnualNote">&nbsp;</div>
+                <ul class="pr-features">
+                    <li>✅ Everything in Free</li>
+                    <li>✅ Full learning pathway, unlocked</li>
+                    <li>✅ Curated courses for every missing skill</li>
+                    <li>✅ Cancel anytime</li>
+                </ul>
+                <a href="analyser.html" class="pr-btn pro">Subscribe to Pro →</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let prIsAnnual = false;
+        function prToggleBilling() {
+            prIsAnnual = !prIsAnnual;
+            document.getElementById('prSwitch').classList.toggle('on', prIsAnnual);
+            document.getElementById('prMonthlyLabel').classList.toggle('active', !prIsAnnual);
+            document.getElementById('prAnnualLabel').classList.toggle('active', prIsAnnual);
+            document.getElementById('prAmount').textContent = prIsAnnual ? 'PKR 3,990' : 'PKR 399';
+            document.getElementById('prPeriod').textContent = prIsAnnual ? '/ year' : '/ month';
+            document.getElementById('prAnnualNote').textContent = prIsAnnual ? 'Just PKR 332/month, billed yearly' : '';
+        }
+    </script>
 
     <!-- TESTIMONIALS -->
     <section class="testimonials" id="blog">
