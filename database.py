@@ -11,7 +11,7 @@ DB_CONFIG = {
 
 
 def get_connection():
-    """Returns a fresh MySQL connection using the credentials above."""
+   
     return mysql.connector.connect(**DB_CONFIG)
 
 
