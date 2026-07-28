@@ -511,6 +511,160 @@
 
         .btn-upgrade:hover { transform: translateY(-1px); }
 
+        /* Blurred course preview (paywall) */
+        .course-list-wrapper { position: relative; }
+
+        .course-list-blurred {
+            filter: blur(6px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .subscribe-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(to bottom, rgba(10,15,30,0.25), rgba(10,15,30,0.9) 55%);
+            border-radius: 12px;
+        }
+
+        .subscribe-overlay-text {
+            font-size: 0.92rem;
+            color: var(--text);
+            max-width: 380px;
+            line-height: 1.6;
+        }
+
+        .subscribe-overlay-text strong { color: var(--accent); }
+
+        /* Fake payment modal */
+        #paymentModalOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5,8,18,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        #paymentModalOverlay.active { display: flex; }
+
+        .payment-modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .payment-modal h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .payment-modal .payment-sub {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .payment-modal .payment-close {
+            position: absolute;
+            top: 1.1rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--muted);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .payment-row { margin-bottom: 0.9rem; }
+
+        .payment-row label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .payment-row input {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .payment-row input:focus { border-color: var(--purple); }
+
+        .payment-row-split { display: flex; gap: 0.8rem; }
+        .payment-row-split .payment-row { flex: 1; }
+
+        .payment-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .payment-summary .amount { font-weight: 700; color: var(--text); font-size: 1rem; }
+
+        .payment-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--purple), #9d7bff);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+        }
+
+        .payment-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .payment-error {
+            background: #2a1414;
+            color: #ff8a8a;
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 0.9rem;
+            display: none;
+        }
+
+        .payment-error.active { display: block; }
+
+        .payment-demo-note {
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-top: 1rem;
+        }
+
         /* Suggestions list */
         .suggestion-list {
             list-style: none;
@@ -773,6 +927,45 @@ Requirements:
 
     </div>
 </div>
+
+<!-- FAKE PAYMENT MODAL (demo only — no real payment processing) -->
+<div id="paymentModalOverlay">
+    <div class="payment-modal">
+        <button class="payment-close" onclick="closePaymentModal()">✕</button>
+        <h2>Subscribe to Pro</h2>
+        <p class="payment-sub">Unlock your full learning pathway.</p>
+
+        <div class="payment-summary">
+            <span>SkillVerse Pro — monthly</span>
+            <span class="amount">PKR 399</span>
+        </div>
+
+        <div id="paymentError" class="payment-error"></div>
+
+        <div class="payment-row">
+            <label for="cardName">Name on Card</label>
+            <input type="text" id="cardName" placeholder="Manahil Malik" autocomplete="cc-name">
+        </div>
+        <div class="payment-row">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242" maxlength="19" autocomplete="cc-number">
+        </div>
+        <div class="payment-row-split">
+            <div class="payment-row">
+                <label for="cardExpiry">Expiry</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp">
+            </div>
+            <div class="payment-row">
+                <label for="cardCvv">CVV</label>
+                <input type="text" id="cardCvv" placeholder="123" maxlength="3" autocomplete="cc-csc">
+            </div>
+        </div>
+
+        <button class="payment-submit" id="paySubmitBtn" onclick="submitPayment()">Pay PKR 399</button>
+        <p class="payment-demo-note">Demo mode — no real payment is processed. Any card details will work.</p>
+    </div>
+</div>
+
 <script src="auth.js"></script>
 <script>
 let cvFileBase64 = null;
@@ -999,31 +1192,18 @@ function renderPathway(r) {
     const cl = document.getElementById('courseList');
     cl.innerHTML = '';
 
-    if (r.pathway_locked) {
-        const count = r.gap_skill_count || 0;
-        cl.innerHTML = `
-            <div class="pathway-locked">
-                <div class="pathway-locked-icon">🔒</div>
-                <div class="pathway-locked-text">
-                    <strong>${count}</strong> skill${count === 1 ? '' : 's'} to work on. Upgrade to unlock a
-                    step-by-step learning pathway with free courses for each one.
-                </div>
-                <button class="btn-upgrade" onclick="doUpgrade()">Unlock Learning Pathway →</button>
-            </div>`;
-        return;
-    }
-
     const pathway = r.learning_pathway || [];
     if (!pathway.length) {
         cl.innerHTML = '<p style="color:#9b9bb5;font-size:0.88rem;">No major skill gaps — no courses needed!</p>';
         return;
     }
 
+    let coursesHtml = '';
     pathway.forEach(group => {
-        cl.innerHTML += `<div class="pathway-skill-heading">${group.skill}</div>`;
+        coursesHtml += `<div class="pathway-skill-heading">${group.skill}</div>`;
         (group.courses || []).forEach(c => {
             const icon = PATHWAY_ICONS[c.platform] || '📚';
-            cl.innerHTML += `
+            coursesHtml += `
                 <div class="course-item">
                     <span class="course-icon">${icon}</span>
                     <div class="course-info">
@@ -1034,30 +1214,93 @@ function renderPathway(r) {
                 </div>`;
         });
     });
+
+    if (r.pathway_locked) {
+        const count = r.gap_skill_count || pathway.length;
+        cl.innerHTML = `
+            <div class="course-list-wrapper">
+                <div class="course-list course-list-blurred">${coursesHtml}</div>
+                <div class="subscribe-overlay">
+                    <div class="pathway-locked-icon">🔒</div>
+                    <div class="subscribe-overlay-text">
+                        <strong>${count}</strong> skill${count === 1 ? '' : 's'} to work on, with courses ready to go.
+                    </div>
+                    <button class="btn-upgrade" onclick="SkillVerseAuth.requireAuth(openPaymentModal)">Subscribe to Unlock →</button>
+                </div>
+            </div>`;
+    } else {
+        cl.innerHTML = coursesHtml;
+    }
 }
 
-async function doUpgrade() {
+function openPaymentModal() {
+    document.getElementById('paymentError').classList.remove('active');
+    document.getElementById('cardName').value = '';
+    document.getElementById('cardNumber').value = '';
+    document.getElementById('cardExpiry').value = '';
+    document.getElementById('cardCvv').value = '';
+    document.getElementById('paymentModalOverlay').classList.add('active');
+}
+
+function closePaymentModal() {
+    document.getElementById('paymentModalOverlay').classList.remove('active');
+}
+
+function showPaymentError(msg) {
+    const el = document.getElementById('paymentError');
+    el.textContent = msg;
+    el.classList.add('active');
+}
+
+async function submitPayment() {
+    const name = document.getElementById('cardName').value.trim();
+    const number = document.getElementById('cardNumber').value.replace(/\s/g, '');
+    const expiry = document.getElementById('cardExpiry').value.trim();
+    const cvv = document.getElementById('cardCvv').value.trim();
+
+    // demo validation only — not a real card check
+    if (!name) return showPaymentError('Enter the name on your card.');
+    if (!/^\d{13,19}$/.test(number)) return showPaymentError('Enter a valid card number.');
+    if (!/^\d{2}\/\d{2}$/.test(expiry)) return showPaymentError('Expiry should be in MM/YY format.');
+    if (!/^\d{3,4}$/.test(cvv)) return showPaymentError('Enter a valid CVV.');
+
+    const btn = document.getElementById('paySubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
+    // fake delay so it feels like something's happening
+    await delay(900);
+
     try {
         const res = await fetch('http://127.0.0.1:5000/api/upgrade', {
             method: 'POST',
             headers: { 'Authorization': 'Bearer ' + SkillVerseAuth.getToken() }
         });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) return showError(data.message || 'Upgrade failed.');
+        if (!res.ok) {
+            showPaymentError(data.message || 'Payment failed. Please try again.');
+            btn.disabled = false;
+            btn.textContent = 'Pay PKR 399';
+            return;
+        }
 
         localStorage.setItem('sv_is_paid', 'true');
+        closePaymentModal();
 
-        // Re-run the analysis so the backend returns the unlocked pathway
-        if (cvFileBase64 && document.getElementById('jdText').value.trim()) {
-            runAnalysis();
-        } else if (lastResult) {
+        // just unlock using the result we already have — no need to
+        // burn another Gemini call re-analysing the same CV/JD
+        if (lastResult) {
             lastResult.pathway_locked = false;
             renderPathway(lastResult);
         }
     } catch (e) {
-        showError('Could not reach the server. Is the backend running on port 5000?');
+        showPaymentError('Could not reach the server. Is the backend running on port 5000?');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Pay PKR 399';
     }
 }
+
 
 function resetPage() {
     document.getElementById('results').classList.remove('active');
