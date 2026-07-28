@@ -12,7 +12,7 @@ from google.genai import types
 from dotenv import load_dotenv
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
-
+from datetime import datetime
 load_dotenv()
 
 from authenticate import create_user, verify_user, create_session, get_user_from_token, find_or_create_google_user
@@ -34,8 +34,6 @@ def is_password_valid(password):
 
 
 def extract_cv_text(pdf_bytes):
-    """Extracts plain text from a PDF's bytes. Returns an empty string if
-    extraction fails for any reason (e.g. a scanned/image-only PDF)."""
     try:
         text_parts = []
         with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
@@ -47,9 +45,7 @@ def extract_cv_text(pdf_bytes):
     except Exception:
         return ""
 
-# Common variations so "SQL" also matches "MySQL", "structured query
-# language", etc. — handles abbreviation mismatches that share no
-# common root word, which generic word-matching alone can't catch.
+
 SKILL_TEXT_ALIASES = {
     "sql": ["sql", "mysql", "postgresql", "structured query language", "queries", "joins"],
     "javascript": ["javascript", "js"],
@@ -153,8 +149,12 @@ Your task:
 1. Read and understand the CV content from the attached PDF.
 2. Compare it against the job description.
 3. Calculate an honest match score (0-100) based on how well the candidate's skills, experience, and qualifications align with the job requirements.
+3b. Today's real-world date is {current_date}. Do NOT flag, question, or penalize any dates in the CV as being "in the future," inconsistent, or suspicious, even if they look recent or later than what you'd otherwise expect — trust the dates as given and treat them as valid. Never mention CV dates as an issue, gap, or red flag in the summary, verdict, or cv_tips.
 4. Identify which required skills the candidate clearly has, which they partially have, and which are completely missing.
-4b. CRITICAL: Before marking any skill as "missing," search the CV text character-by-character for that exact skill name or a close synonym. If ANY internship, project, or coursework entry contains that word or technology name — regardless of duration, depth, or how it's phrased — you MUST classify it as "present," not "missing." Under no circumstances should real, named experience be omitted for being "too brief." This rule overrides your own judgment about sufficiency.
+4b. CRITICAL: Before marking any skill as "missing," search the CV text for that exact skill name, its common abbreviation, or a direct naming variant (e.g. "JS" for "JavaScript", "Git" for "version control", "DBs" for "databases"). If found — regardless of duration, depth, or how briefly it's mentioned — classify it as "present," not "missing." Under no circumstances should real, named experience be omitted for being "too brief."
+However, do NOT infer a skill from a conceptually related or adjacent technology, project type, or general reasoning about what the candidate likely knows. A skill counts as present ONLY if its own name (or a direct variant, per above) appears in the CV — never because a different, related technology appears instead, and never just because the candidate knows a broader language or framework that skill is commonly used within. For example: knowing JavaScript does NOT by itself imply DOM manipulation, event handling, async/await, or frontend JSON consumption — those are separate, specific skills and each needs its own textual evidence. Likewise, file handling, structured data storage, or working with C++/data structures does NOT imply knowledge of JSON or HTTP.
+The ONE exception: if the CV explicitly states REST API integration or CRUD API work, you may credit basic JSON familiarity and basic HTTP familiarity as "partial" (not "present," unless JSON/HTTP is also separately named) — since exchanging data via REST inherently involves both. Do not extend this kind of reasoning to any other skill pair; this is the only pre-approved inference.
+When in doubt between "the candidate probably knows this" and "the CV doesn't actually say this," always choose "missing" (or "partial" only where explicitly permitted above).
 5. Order the missing/partial skills by learning priority - which skill should be learned first, second, etc, based on importance to the job and typical prerequisites (foundational skills first).
 5b. If the candidate is currently pursuing a degree relevant to the requirement (e.g. "Bachelor's in Computer Science 2024–Present"), treat that requirement as FOUND (not missing) if the role targets students/fresh graduates (look for phrases like "fresh graduates encouraged," "0-1 years experience," "entry-level," "internship"). Only mark a degree requirement as missing if the CV shows no relevant enrollment or completion at all, or if the JD explicitly requires a completed/conferred degree.
 6. Give specific, actionable tips to improve the CV itself (wording, structure, missing sections, quantifying achievements, etc).
@@ -286,7 +286,10 @@ def analyse():
     except Exception:
         return jsonify({"message": "Could not decode the uploaded CV file."}), 400
 
-    prompt_text = PROMPT_TEMPLATE.format(jd=jd)
+    prompt_text = PROMPT_TEMPLATE.format(
+    jd=jd,
+    current_date=datetime.now().strftime("%B %d, %Y"),
+)
 
     try:
         response = client.models.generate_content(
@@ -337,23 +340,24 @@ def analyse():
                 seen_urls.add(course["url"])
     result["courses"] = courses
 
-    # Learning pathway — ordered, step-by-step, paid users only
-    if not is_paid:
-        result["learning_pathway"] = None
-        result["pathway_locked"] = True
-    else:
-        seen_urls_pathway = set()
-        pathway = []
-        for skill in gap_skills:
-            unique_courses = []
-            for course in get_courses_for_skill(skill):
-                if course["url"] not in seen_urls_pathway:
-                    unique_courses.append(course)
-                    seen_urls_pathway.add(course["url"])
-            if unique_courses:
-                pathway.append({"skill": skill, "courses": unique_courses})
-        result["learning_pathway"] = pathway
-        result["pathway_locked"] = False
+    # Learning pathway — ordered, step-by-step.
+    # Always computed and sent in full; the frontend blurs it visually for
+    # free users based on pathway_locked, rather than the backend withholding
+    # the data outright (accepted tradeoff for a demo project, not a strict
+    # security boundary).
+    seen_urls_pathway = set()
+    pathway = []
+    for skill in gap_skills:
+        unique_courses = []
+        for course in get_courses_for_skill(skill):
+            if course["url"] not in seen_urls_pathway:
+                unique_courses.append(course)
+                seen_urls_pathway.add(course["url"])
+        if unique_courses:
+            pathway.append({"skill": skill, "courses": unique_courses})
+    result["learning_pathway"] = pathway
+    result["pathway_locked"] = not is_paid
+    result["gap_skill_count"] = len(gap_skills)
 
     return jsonify(result), 200
 
