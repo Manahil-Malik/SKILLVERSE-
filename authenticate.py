@@ -93,8 +93,6 @@ def create_session(user_id):
 
 
 def get_user_from_token(token):
-    """Looks up which user a session token belongs to, by checking the
-    sessions table in the database instead of an in-memory dictionary."""
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
