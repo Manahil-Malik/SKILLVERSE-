@@ -1,14 +1,4 @@
-/* auth.js — shared login/signup modal + session handling for SkillVerse
-   Include this on any page with: <script src="auth.js"></script>
 
-   It expects an element with id="authNavSlot" somewhere in your <nav> —
-   it will render either a "Log In" button or the logged-in user's avatar there.
-
-   Usage to gate an action behind login:
-     SkillVerseAuth.requireAuth(() => { ...do the thing... });
-   If the user isn't logged in, this opens the login modal instead, and
-   automatically runs your callback right after they log in / sign up.
-*/
 
 (function () {
     const API_BASE = 'http://127.0.0.1:5000';
